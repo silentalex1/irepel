@@ -3,127 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poems & Projects</title>
+    <title>VerseCraft - Poems & Projects</title>
     <style>
         /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #F5F5DC; /* Soft Beige */
-            color: #2F2F2F; /* Dark Gray */
+            background-color: #F4F1EB; /* Soft Beige */
+            color: #333333; /* Dark Gray for Text */
             line-height: 1.6;
         }
 
-        /* Navbar */
+        /* Navbar Styling */
         .navbar {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background-color: #00473E; /* Deep Forest Green */
-            padding: 15px 30px;
-            border-radius: 30px;
+            padding: 10px 30px;
+            border-radius: 40px;
             display: flex;
-            justify-content: space-around;
-            width: 70%;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            justify-content: space-between;
+            width: 55%;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar a {
-            color: #F5F5DC; /* Off-White Text */
+            color: #FFFFFF; /* White Text */
             text-decoration: none;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 600;
             border-radius: 20px;
-            transition: background 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .navbar a:hover {
-            background-color: #D4AF37; /* Muted Gold */
+            background-color: #D4AF37; /* Muted Gold on Hover */
         }
 
-        /* Main Container */
+        /* Main Content Container */
         .container {
-            margin-top: 120px; /* Space for navbar */
+            margin-top: 130px; /* Space for fixed navbar */
+            padding: 20px;
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            padding: 20px;
         }
 
-        /* Poems Section */
         .section {
+            background-color: #FFFFFF; /* White background for sections */
+            padding: 40px;
             margin-bottom: 40px;
-            padding: 20px;
-            background-color: #F8F8F2; /* Lighter Beige for Sections */
-            border-radius: 15px;
+            border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .section h2 {
+            font-size: 28px;
             color: #00473E; /* Deep Forest Green */
             margin-bottom: 20px;
-            font-size: 28px;
-            border-bottom: 2px solid #D4AF37; /* Gold Underline */
+            border-bottom: 2px solid #D4AF37; /* Gold Border Under Title */
             padding-bottom: 10px;
         }
 
         .section p {
             font-size: 18px;
-            margin-bottom: 15px;
+            color: #555555; /* Softer gray for text */
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
-        /* Comments Section */
-        .comments {
-            background-color: #FFE4C4; /* Soft Coral for Comments Section */
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-
-        .comments h3 {
-            color: #2F2F2F; /* Dark Gray */
-            margin-bottom: 10px;
-            font-size: 22px;
-        }
-
-        .comments input, .comments textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #D4AF37; /* Muted Gold Border */
-            font-size: 16px;
-        }
-
-        .comments button {
+        .button {
+            display: inline-block;
             background-color: #00473E; /* Deep Forest Green */
-            color: #F5F5DC; /* Off-White */
+            color: #FFFFFF; /* White text */
             padding: 10px 20px;
             font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
             transition: background-color 0.3s ease;
         }
 
-        .comments button:hover {
-            background-color: #D4AF37; /* Muted Gold */
+        .button:hover {
+            background-color: #D4AF37; /* Gold Button Hover */
         }
 
-        /* Footer */
+        /* Footer Styling */
         footer {
             text-align: center;
             padding: 20px;
             background-color: #00473E; /* Deep Forest Green */
-            color: #F5F5DC;
-            margin-top: 40px;
+            color: #FFFFFF;
             border-radius: 0 0 10px 10px;
+            margin-top: 40px;
         }
 
         footer p {
@@ -141,34 +127,33 @@
         <a href="#create-account">Create Account</a>
     </nav>
 
-    <!-- Main Container -->
+    <!-- Main Content Container -->
     <div class="container">
         <!-- Poems Section -->
         <div class="section" id="poems">
             <h2>My Poems</h2>
-            <p>Here you can post your poems, each one displayed in its own beautiful section. Express yourself creatively!</p>
-            <p>[Your Poems Here]</p>
+            <p>Here, I share my personal collection of poems, each crafted with thought and emotion. Explore and feel the words.</p>
+            <a href="#" class="button">Explore Poems</a>
         </div>
 
         <!-- Projects Section -->
         <div class="section" id="projects">
             <h2>Upcoming Projects</h2>
-            <p>Share your upcoming website projects and ideas. Keep your audience updated and engaged.</p>
-            <p>[Your Projects Here]</p>
+            <p>Stay informed about the exciting projects I'm working on, with regular updates and insights into my creative process.</p>
+            <a href="#" class="button">View Projects</a>
         </div>
 
-        <!-- Comments Section -->
-        <div class="comments">
-            <h3>Leave a Comment</h3>
-            <input type="text" placeholder="Your Name">
-            <textarea rows="5" placeholder="Your Comment"></textarea>
-            <button type="submit">Submit Comment</button>
+        <!-- Create Account Section -->
+        <div class="section" id="create-account">
+            <h2>Create an Account</h2>
+            <p>Join the community! By creating an account, you can engage with the content, leave feedback, and stay updated.</p>
+            <a href="#" class="button">Sign Up Now</a>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Poems & Projects Website. All rights reserved.</p>
+        <p>&copy; 2024 VerseCraft. All rights reserved.</p>
     </footer>
 
 </body>
