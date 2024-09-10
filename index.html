@@ -3,233 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VerseCraft - Poems & Projects</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Create Account - VerseCraft</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .navbar {
-            background-color: #ffffff;
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #3a86ff, #2563eb);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 600;
-            color: #3a86ff;
-        }
-
-        .nav-links a {
-            color: #333;
-            text-decoration: none;
-            margin-left: 25px;
-            font-weight: 400;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #3a86ff;
-        }
-
-        .hero {
-            background-image: url('https://source.unsplash.com/random/1600x900/?poetry');
-            background-size: cover;
-            background-position: center;
-            height: 60vh;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             color: #fff;
-            margin-top: 60px;
         }
-
-        .hero-content {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 8px;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
         }
-
-        .section {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-        }
-
-        .section h2 {
-            color: #3a86ff;
-            margin-bottom: 15px;
-        }
-
-        .button {
-            display: inline-block;
-            background-color: #3a86ff;
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
             color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 400;
+            font-weight: 600;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #d1d5db;
+            text-align: left;
+        }
+        input {
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
             transition: background-color 0.3s ease;
         }
-
-        .button:hover {
+        input:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #e63946;
+            transform: translateY(-2px);
+        }
+        .verification-code {
+            display: none;
+            margin-top: 1.5rem;
+        }
+        #verifyCode {
+            background-color: #3a86ff;
+            transition: background-color 0.3s ease;
+        }
+        #verifyCode:hover {
             background-color: #2563eb;
         }
-
-        .features {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .feature {
-            flex-basis: calc(33.333% - 20px);
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .feature img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
             }
-            .nav-links {
-                margin-top: 15px;
+            h1 {
+                font-size: 1.8rem;
             }
-            .nav-links a {
-                margin: 0 10px;
-            }
-            .hero h1 {
-                font-size: 36px;
-            }
-            .feature {
-                flex-basis: 100%;
+            input, button {
+                font-size: 0.9rem;
+                padding: 0.65rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">VerseCraft</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#poems">Poems</a>
-                <a href="#projects">Projects</a>
-                <a href="#account">Account</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hero" id="home">
-        <div class="hero-content">
-            <h1>Welcome to VerseCraft</h1>
-            <p>Discover the beauty of words and creativity</p>
-            <a href="#" class="button">Start Exploring</a>
-        </div>
-    </header>
-
     <div class="container">
-        <section class="section" id="poems">
-            <h2>Poetic Expressions</h2>
-            <p>Dive into a world of emotions and imagination through our collection of poems.</p>
-            <a href="#" class="button">Read Poems</a>
-        </section>
-
-        <section class="section" id="projects">
-            <h2>Creative Projects</h2>
-            <p>Explore upcoming projects and collaborations from our talented community.</p>
-            <a href="#" class="button">View Projects</a>
-        </section>
-
-        <section class="section" id="account">
-            <h2>Join Our Community</h2>
-            <p>Create an account to share your work, connect with others, and participate in events.</p>
-            <a href="#" class="button">Sign Up</a>
-        </section>
-
-        <div class="features">
-            <div class="feature">
-                <img src="https://img.icons8.com/fluency/96/000000/pen.png" alt="Write">
-                <h3>Write</h3>
-                <p>Express yourself through poetry and creative writing.</p>
+        <h1>Create Account</h1>
+        <form id="createAccountForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            
+            <button type="submit" id="sendVerification">Send Verification Code</button>
+            
+            <div class="verification-code" id="verificationSection">
+                <label for="verificationCode">Verification Code:</label>
+                <input type="text" id="verificationCode" name="verificationCode" placeholder="Enter code" required>
+                <button type="button" id="verifyCode">Verify and Create Account</button>
             </div>
-            <div class="feature">
-                <img src="https://img.icons8.com/fluency/96/000000/share-rounded.png" alt="Share">
-                <h3>Share</h3>
-                <p>Share your work with a supportive community of writers.</p>
-            </div>
-            <div class="feature">
-                <img src="https://img.icons8.com/fluency/96/000000/conference-call.png" alt="Connect">
-                <h3>Connect</h3>
-                <p>Connect with fellow poets and creative minds.</p>
-            </div>
-        </div>
+        </form>
     </div>
 
-    <footer>
-        <p>&copy; 2024 VerseCraft. Inspiring creativity through words.</p>
-    </footer>
+    <script>
+        document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Verification code sent to your email. Please check your inbox.');
+            document.getElementById('verificationSection').style.display = 'block';
+            document.getElementById('sendVerification').style.display = 'none';
+        });
+
+        document.getElementById('verifyCode').addEventListener('click', function() {
+            alert('Account created successfully!');
+        });
+    </script>
 </body>
 </html>
