@@ -5,156 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerseCraft - Poems & Projects</title>
     <style>
-        /* General Reset */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #F4F1EB; /* Soft Beige */
-            color: #333333; /* Dark Gray for Text */
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
             line-height: 1.6;
         }
 
-        /* Navbar Styling */
         .navbar {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #00473E; /* Deep Forest Green */
-            padding: 10px 30px;
-            border-radius: 40px;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
-            width: 55%;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
         }
 
-        .navbar a {
-            color: #FFFFFF; /* White Text */
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .nav-links a {
+            color: #333;
             text-decoration: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 20px;
-            transition: background-color 0.3s ease;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
-        .navbar a:hover {
-            background-color: #D4AF37; /* Muted Gold on Hover */
+        .nav-links a:hover {
+            color: #007bff;
         }
 
-        /* Main Content Container */
         .container {
-            margin-top: 130px; /* Space for fixed navbar */
-            padding: 20px;
             max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 30px;
         }
 
         .section {
-            background-color: #FFFFFF; /* White background for sections */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin-bottom: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .section:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .section h2 {
-            font-size: 28px;
-            color: #00473E; /* Deep Forest Green */
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
             margin-bottom: 20px;
-            border-bottom: 2px solid #D4AF37; /* Gold Border Under Title */
-            padding-bottom: 10px;
+            color: #1a1a1a;
         }
 
         .section p {
-            font-size: 18px;
-            color: #555555; /* Softer gray for text */
-            line-height: 1.8;
             margin-bottom: 20px;
+            color: #666;
         }
 
         .button {
             display: inline-block;
-            background-color: #00473E; /* Deep Forest Green */
-            color: #FFFFFF; /* White text */
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: 600;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
             text-decoration: none;
-            border-radius: 8px;
+            font-weight: 500;
             transition: background-color 0.3s ease;
         }
 
         .button:hover {
-            background-color: #D4AF37; /* Gold Button Hover */
+            background-color: #0056b3;
         }
 
-        /* Footer Styling */
         footer {
+            background-color: #1a1a1a;
+            color: #fff;
             text-align: center;
-            padding: 20px;
-            background-color: #00473E; /* Deep Forest Green */
-            color: #FFFFFF;
-            border-radius: 0 0 10px 10px;
-            margin-top: 40px;
+            padding: 20px 0;
+            margin-top: 60px;
         }
 
-        footer p {
-            margin: 0;
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                margin-top: 20px;
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
     <nav class="navbar">
-        <a href="#">Main Page</a>
-        <a href="#poems">My Poems</a>
-        <a href="#projects">Upcoming Projects</a>
-        <a href="#create-account">Create Account</a>
+        <div class="nav-container">
+            <div class="logo">VerseCraft</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#poems">Poems</a>
+                <a href="#projects">Projects</a>
+                <a href="#account">Account</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Main Content Container -->
     <div class="container">
-        <!-- Poems Section -->
-        <div class="section" id="poems">
-            <h2>My Poems</h2>
-            <p>Here, I share my personal collection of poems, each crafted with thought and emotion. Explore and feel the words.</p>
-            <a href="#" class="button">Explore Poems</a>
-        </div>
+        <section class="hero" id="home">
+            <h1>Welcome to VerseCraft</h1>
+            <p>Explore the world of poetry and creative projects. Join our community of artists and enthusiasts.</p>
+            <a href="#" class="button">Get Started</a>
+        </section>
 
-        <!-- Projects Section -->
-        <div class="section" id="projects">
-            <h2>Upcoming Projects</h2>
-            <p>Stay informed about the exciting projects I'm working on, with regular updates and insights into my creative process.</p>
-            <a href="#" class="button">View Projects</a>
-        </div>
+        <section class="section" id="poems">
+            <h2>Poetic Expressions</h2>
+            <p>Immerse yourself in a collection of thought-provoking poems. Each verse is crafted to evoke emotion and spark imagination.</p>
+            <a href="#" class="button">Read Poems</a>
+        </section>
 
-        <!-- Create Account Section -->
-        <div class="section" id="create-account">
-            <h2>Create an Account</h2>
-            <p>Join the community! By creating an account, you can engage with the content, leave feedback, and stay updated.</p>
-            <a href="#" class="button">Sign Up Now</a>
-        </div>
+        <section class="section" id="projects">
+            <h2>Creative Horizons</h2>
+            <p>Discover upcoming projects and collaborations. Stay informed about the latest artistic endeavors and creative innovations.</p>
+            <a href="#" class="button">Explore Projects</a>
+        </section>
+
+        <section class="section" id="account">
+            <h2>Join Our Community</h2>
+            <p>Create an account to engage with fellow artists, share your work, and participate in exclusive events and workshops.</p>
+            <a href="#" class="button">Sign Up</a>
+        </section>
     </div>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 VerseCraft. All rights reserved.</p>
+        <p>&copy; 2024 VerseCraft. Crafting words, inspiring minds.</p>
     </footer>
-
 </body>
 </html>
