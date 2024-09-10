@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerseCraft - Poems & Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Basic Reset */
         * {
             margin: 0;
             padding: 0;
@@ -13,128 +13,223 @@
         }
 
         body {
-            background-color: #f0f0f0; /* Light Gray Background */
-            color: #333; /* Dark Text */
-            font-family: Arial, sans-serif; /* Simple Font */
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
             line-height: 1.6;
         }
 
-        /* Navbar Style */
         .navbar {
-            background-color: #007bff; /* Blue Background */
-            padding: 15px; /* Padding for Navbar */
-            text-align: center; /* Centered Text */
-            position: fixed; /* Fixed Position */
-            width: 100%; /* Full Width */
-            top: 0; /* At the Top */
-            z-index: 1000; /* On Top of Other Elements */
+            background-color: #ffffff;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar a {
-            color: #fff; /* White Text */
-            text-decoration: none; /* No Underline */
-            margin: 0 15px; /* Space Between Links */
-            font-weight: bold; /* Bold Text */
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
 
-        .navbar a:hover {
-            text-decoration: underline; /* Underline on Hover */
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #3a86ff;
         }
 
-        /* Main Content Area */
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3a86ff;
+        }
+
+        .hero {
+            background-image: url('https://source.unsplash.com/random/1600x900/?poetry');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            margin-top: 60px;
+        }
+
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
         .container {
-            max-width: 800px; /* Max Width of Content */
-            margin: 80px auto; /* Centered with Space for Navbar */
-            padding: 20px; /* Padding Around Content */
-            background-color: #fff; /* White Background */
-            border-radius: 8px; /* Rounded Corners */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft Shadow */
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        /* Section Style */
         .section {
-            margin-bottom: 30px; /* Space Between Sections */
-            padding: 20px; /* Padding Inside Sections */
-            border: 1px solid #ddd; /* Light Border */
-            border-radius: 8px; /* Rounded Corners */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
         }
 
         .section h2 {
-            margin-bottom: 10px; /* Space Below Headings */
-            color: #007bff; /* Blue Headings */
-        }
-
-        .section p {
-            margin-bottom: 15px; /* Space Below Paragraphs */
+            color: #3a86ff;
+            margin-bottom: 15px;
         }
 
         .button {
-            display: inline-block; /* Inline Block for Button */
-            background-color: #007bff; /* Blue Button */
-            color: #fff; /* White Text */
-            padding: 10px 15px; /* Padding Inside Button */
-            border-radius: 5px; /* Rounded Button */
-            text-decoration: none; /* No Underline */
-            font-weight: bold; /* Bold Text */
+            display: inline-block;
+            background-color: #3a86ff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 400;
+            transition: background-color 0.3s ease;
         }
 
         .button:hover {
-            background-color: #0056b3; /* Darker Blue on Hover */
+            background-color: #2563eb;
         }
 
-        /* Footer Style */
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .feature {
+            flex-basis: calc(33.333% - 20px);
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .feature img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
         footer {
-            text-align: center; /* Centered Text */
-            padding: 15px; /* Padding for Footer */
-            background-color: #007bff; /* Blue Background */
-            color: #fff; /* White Text */
-            position: relative; /* Relative Position */
-            bottom: 0; /* At the Bottom */
-            width: 100%; /* Full Width */
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .nav-links a {
+                margin: 0 10px;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .feature {
+                flex-basis: 100%;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
     <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#poems">My Poems</a>
-        <a href="#projects">Projects</a>
-        <a href="#account">Create Account</a>
+        <div class="nav-container">
+            <div class="logo">VerseCraft</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#poems">Poems</a>
+                <a href="#projects">Projects</a>
+                <a href="#account">Account</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container">
-        <section class="section" id="home">
-            <h2>Welcome to VerseCraft</h2>
-            <p>Discover poems and projects. Join our community and share your creativity!</p>
-            <a href="#" class="button">Get Started</a>
-        </section>
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to VerseCraft</h1>
+            <p>Discover the beauty of words and creativity</p>
+            <a href="#" class="button">Start Exploring</a>
+        </div>
+    </header>
 
+    <div class="container">
         <section class="section" id="poems">
-            <h2>My Poems</h2>
-            <p>Here are my poems, filled with thoughts and feelings. Enjoy reading!</p>
+            <h2>Poetic Expressions</h2>
+            <p>Dive into a world of emotions and imagination through our collection of poems.</p>
             <a href="#" class="button">Read Poems</a>
         </section>
 
         <section class="section" id="projects">
-            <h2>Upcoming Projects</h2>
-            <p>Check out the projects I'm working on. Stay tuned for updates!</p>
+            <h2>Creative Projects</h2>
+            <p>Explore upcoming projects and collaborations from our talented community.</p>
             <a href="#" class="button">View Projects</a>
         </section>
 
         <section class="section" id="account">
-            <h2>Create an Account</h2>
-            <p>Join us! Create an account to connect with others and share your work.</p>
+            <h2>Join Our Community</h2>
+            <p>Create an account to share your work, connect with others, and participate in events.</p>
             <a href="#" class="button">Sign Up</a>
         </section>
+
+        <div class="features">
+            <div class="feature">
+                <img src="https://img.icons8.com/fluency/96/000000/pen.png" alt="Write">
+                <h3>Write</h3>
+                <p>Express yourself through poetry and creative writing.</p>
+            </div>
+            <div class="feature">
+                <img src="https://img.icons8.com/fluency/96/000000/share-rounded.png" alt="Share">
+                <h3>Share</h3>
+                <p>Share your work with a supportive community of writers.</p>
+            </div>
+            <div class="feature">
+                <img src="https://img.icons8.com/fluency/96/000000/conference-call.png" alt="Connect">
+                <h3>Connect</h3>
+                <p>Connect with fellow poets and creative minds.</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 VerseCraft. All rights reserved.</p>
+        <p>&copy; 2024 VerseCraft. Inspiring creativity through words.</p>
     </footer>
-
 </body>
 </html>
