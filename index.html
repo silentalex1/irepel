@@ -16,18 +16,18 @@
             color: #fff;
         }
         .container {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
             padding: 3rem;
-            border-radius: 18px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             text-align: center;
         }
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 1.8rem;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
             font-weight: 700;
             color: #fff;
         }
@@ -42,11 +42,11 @@
             text-align: left;
         }
         input {
-            padding: 0.85rem;
-            margin-top: 0.6rem;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
             border: none;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.25);
             color: #fff;
             font-size: 1rem;
             outline: none;
@@ -66,7 +66,7 @@
             color: white;
             padding: 1rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-top: 1.5rem;
             cursor: pointer;
             font-size: 1.1rem;
@@ -78,25 +78,6 @@
         }
         .verification-code {
             display: none;
-            margin-top: 1.5rem;
-        }
-        #verifyCode {
-            background-color: #3a86ff;
-        }
-        #verifyCode:hover {
-            background-color: #2563eb;
-        }
-        @media (max-width: 480px) {
-            body {
-                padding: 1rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            input, button {
-                font-size: 0.9rem;
-                padding: 0.75rem;
-            }
         }
     </style>
 </head>
@@ -105,76 +86,78 @@
         <h1>Create Account</h1>
         <form id="createAccountForm">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" required>
             
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            <div id="passwordStrength" class="password-strength">Password strength: weak</div>
+            <input type="password" id="password" name="password" required>
+            <div class="password-strength" id="passwordStrength"></div>
             
             <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
             
             <button type="submit" id="sendVerification">Send Verification Code</button>
             
             <div class="verification-code" id="verificationSection">
                 <label for="verificationCode">Verification Code:</label>
-                <input type="text" id="verificationCode" name="verificationCode" placeholder="Enter code" required>
-                <button type="button" id="verifyCode">Verify and Create Account</button>
+                <input type="text" id="verificationCode" name="verificationCode" required>
+                <button type="button" id="verifyCode">Verify Code</button>
             </div>
         </form>
     </div>
-
     <script>
-        document.getElementById('password').addEventListener('input', function() {
-            const password = this.value;
-            const strengthIndicator = document.getElementById('passwordStrength');
-            let strength = 'weak';
-            if (password.length >= 8) {
-                strength = 'medium';
-            }
-            if (/[A-Z]/.test(password) && /[0-9]/.test(password)) {
-                strength = 'strong';
-            }
-            strengthIndicator.textContent = 'Password strength: ' + strength;
-            strengthIndicator.style.color = strength === 'weak' ? '#f8d347' : strength === 'medium' ? '#f97d34' : '#34f97b';
-        });
-
-        document.getElementById('createAccountForm').addEventListener('submit', async function(e) {
+        document.getElementById('createAccountForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const response = await fetch('/send-verification', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            if (response.ok) {
-                alert('Verification code sent to your email.');
-                document.getElementById('verificationSection').style.display = 'block';
-                document.getElementById('sendVerification').style.display = 'none';
-            } else {
-                alert('Error sending verification code.');
-            }
-        });
-
-        document.getElementById('verifyCode').addEventListener('click', async function() {
-            const verificationCode = document.getElementById('verificationCode').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+
             if (password !== confirmPassword) {
                 alert('Passwords do not match.');
                 return;
             }
-            const response = await fetch('/verify-code', {
+
+            const response = await fetch('/api/create-account', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, verificationCode, password })
+                body: JSON.stringify({ email, password })
             });
+
             if (response.ok) {
-                alert('Account created successfully!');
-                window.location.href = '/login';
+                document.getElementById('verificationSection').style.display = 'block';
+                alert('Verification code sent to your email.');
+            } else {
+                alert('Error creating account.');
+            }
+        });
+
+        document.getElementById('verifyCode').addEventListener('click', async () => {
+            const verificationCode = document.getElementById('verificationCode').value;
+
+            const response = await fetch('/api/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ verificationCode })
+            });
+
+            if (response.ok) {
+                alert('Account created successfully.');
             } else {
                 alert('Invalid verification code.');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = document.getElementById('passwordStrength');
+            if (password.length < 6) {
+                strength.textContent = 'Weak';
+                strength.style.color = '#f8d347';
+            } else if (password.length < 12) {
+                strength.textContent = 'Moderate';
+                strength.style.color = '#ff8c00';
+            } else {
+                strength.textContent = 'Strong';
+                strength.style.color = '#28a745';
             }
         });
     </script>
