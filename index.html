@@ -3,189 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iRepel - Simple Ad Blocker</title>
+    <title>iRepel - Ad Blocker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50b3e0;
+            --accent-color: #ff7f50;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --white: #fff;
         }
 
         * {
-            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .navbar {
-            background-color: #333;
-            padding: 15px;
-            position: sticky;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
         }
-        .navbar a {
-            color: #fff;
-            margin: 0 15px;
-            padding: 10px 15px;
-            border-radius: 5px;
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
         }
-        .navbar a:hover {
-            background-color: #444;
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
         }
 
         .hero {
-            background: linear-gradient(135deg, #4a90e2, #50b3e0);
-            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 150px 0 100px;
             text-align: center;
-            color: white;
         }
+
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
         }
+
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 40px;
+            animation: fadeInUp 1s ease 0.2s;
         }
-        .hero button {
-            background-color: #ff7f50;
-            border: none;
-            padding: 15px 25px;
-            color: white;
-            font-size: 1rem;
-            border-radius: 5px;
-            margin-top: 30px;
-            cursor: pointer;
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s;
         }
-        .hero button:hover {
-            background-color: #ff6347;
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .features {
-            display: flex;
-            justify-content: space-around;
-            padding: 50px;
-            background-color: #fafafa;
+            padding: 100px 0;
+            background-color: var(--white);
         }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
         .feature {
-            width: 30%;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            padding: 40px;
+            border-radius: 10px;
+            background-color: var(--bg-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
+
         .feature:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px);
         }
+
+        .feature i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
         .feature h3 {
-            font-size: 1.4rem;
-            color: #333;
-        }
-        .feature p {
-            font-size: 1rem;
-            color: #555;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
         }
 
         .cta {
-            background-color: #50b3e0;
-            padding: 60px;
+            background-color: var(--secondary-color);
+            padding: 100px 0;
             text-align: center;
-            color: white;
+            color: var(--white);
         }
+
         .cta h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        .cta button {
-            padding: 10px 25px;
-            font-size: 1rem;
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .cta button:hover {
-            background-color: #d35400;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
         }
 
         .footer {
-            background-color: #333;
-            padding: 20px;
+            background-color: var(--text-color);
+            color: var(--white);
+            padding: 60px 0;
             text-align: center;
-            color: #fff;
         }
-        .footer p {
-            font-size: 1rem;
-        }
+
         .footer a {
-            color: #1abc9c;
+            color: var(--secondary-color);
             text-decoration: none;
+            transition: color 0.3s ease;
         }
+
         .footer a:hover {
-            text-decoration: underline;
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            .features {
-                flex-direction: column;
-                align-items: center;
+            .hero h1 {
+                font-size: 2.5rem;
             }
-            .feature {
-                width: 90%;
-                margin-bottom: 20px;
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
-        <div>
-            <a href="#">Home</a>
-            <a href="#">Features</a>
-            <a href="#">Pricing</a>
-            <a href="#">Contact</a>
+        <div class="container">
+            <a href="#" class="logo">iRepel</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="#">Contact</a>
+            </div>
         </div>
     </nav>
 
     <section class="hero">
-        <div>
-            <h1>iRepel Ad Blocker</h1>
-            <p>Stop ads and browse faster with our simple, easy-to-use ad blocker.</p>
-            <button>Get iRepel Now</button>
+        <div class="container">
+            <h1>Experience a Cleaner Web</h1>
+            <p>iRepel: The next-generation ad blocker for a faster, safer, and more enjoyable browsing experience.</p>
+            <a href="#" class="btn">Get iRepel Now</a>
         </div>
     </section>
 
     <section class="features">
-        <div class="feature">
-            <h3>Block Ads</h3>
-            <p>Get rid of ads while you browse the web, making your experience cleaner and quicker.</p>
-        </div>
-        <div class="feature">
-            <h3>Safe Browsing</h3>
-            <p>iRepel blocks harmful scripts and trackers to keep your browsing private.</p>
-        </div>
-        <div class="feature">
-            <h3>Easy to Use</h3>
-            <p>Install quickly and start blocking ads right away without any hassle.</p>
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Advanced Protection</h3>
+                    <p>Block ads, trackers, and malicious scripts with our cutting-edge technology.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>Enjoy faster page loads and reduced data usage for a smoother browsing experience.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Privacy First</h3>
+                    <p>Protect your online privacy with our advanced tracking prevention features.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="cta">
-        <h2>Try iRepel Now</h2>
-        <button>Download iRepel</button>
+        <div class="container">
+            <h2>Ready to Reclaim Your Internet?</h2>
+            <a href="#" class="btn">Download iRepel</a>
+        </div>
     </section>
 
     <footer class="footer">
-        <p>&copy; 2024 iRepel | <a href="#">Privacy Policy</a></p>
+        <div class="container">
+            <p>&copy; 2024 iRepel | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
     </footer>
-
 </body>
 </html>
