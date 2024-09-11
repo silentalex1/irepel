@@ -3,149 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - VerseCraft</title>
+    <title>iRepel - Simple Ad Blocker</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #3a86ff, #2563eb);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        body, html {
             margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
             color: #333;
         }
-        .container {
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
+
+        * {
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: #fff;
+            margin: 0 15px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .navbar a:hover {
+            background-color: #444;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #4a90e2, #50b3e0);
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .hero button {
+            background-color: #ff7f50;
+            border: none;
+            padding: 15px 25px;
+            color: white;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+        .hero button:hover {
+            background-color: #ff6347;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px;
+            background-color: #fafafa;
+        }
+        .feature {
+            width: 30%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            color: #fff;
+        .feature:hover {
+            transform: scale(1.05);
         }
-        label {
-            margin-top: 1rem;
+        .feature h3 {
+            font-size: 1.4rem;
+            color: #333;
+        }
+        .feature p {
             font-size: 1rem;
-            color: #e0e6ed;
-            text-align: left;
-            display: block;
+            color: #555;
         }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 0.5rem;
-            margin-bottom: 1.5rem;
-            border: none;
-            border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.25);
-            color: #fff;
-            outline: none;
-            transition: background-color 0.3s ease;
-        }
-        input:focus, textarea:focus {
-            background-color: rgba(255, 255, 255, 0.35);
-        }
-        button {
-            width: 100%;
-            padding: 1rem;
-            background-color: #ff6b6b;
-            border: none;
-            border-radius: 8px;
+
+        .cta {
+            background-color: #50b3e0;
+            padding: 60px;
+            text-align: center;
             color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        button:hover {
-            background-color: #e63946;
-            transform: translateY(-2px);
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
-        .comment-section {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-        }
-        .comment {
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #f9f9f9;
+        .cta button {
+            padding: 10px 25px;
+            font-size: 1rem;
+            background-color: #e67e22;
+            color: white;
+            border: none;
             border-radius: 5px;
-            border: 1px solid #eee;
+            cursor: pointer;
+        }
+        .cta button:hover {
+            background-color: #d35400;
+        }
+
+        .footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+        .footer p {
+            font-size: 1rem;
+        }
+        .footer a {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feature {
+                width: 90%;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Create Account - VerseCraft</h1>
-        <div id="createAccountSection">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter your email">
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Create a password">
-            <button id="createAccountBtn">Create Account</button>
-        </div>
-        <div id="loginSection" style="display: none;">
-            <h2>Welcome!</h2>
-            <label for="comment">Leave a comment on poems/projects:</label>
-            <textarea id="comment" placeholder="Write your comment here"></textarea>
-            <button id="postCommentBtn">Post Comment</button>
-        </div>
-        <div class="comment-section" id="commentSection">
-            <h2>Comments:</h2>
-            <div id="commentsContainer"></div>
-        </div>
-    </div>
-    <script>
-        const createAccountSection = document.getElementById('createAccountSection');
-        const loginSection = document.getElementById('loginSection');
-        const commentsContainer = document.getElementById('commentsContainer');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const commentInput = document.getElementById('comment');
-        let userLoggedIn = false;
 
-        document.getElementById('createAccountBtn').addEventListener('click', async () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (email && password) {
-                const response = await fetch('/create-account', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-                if (response.ok) {
-                    userLoggedIn = true;
-                    createAccountSection.style.display = 'none';
-                    loginSection.style.display = 'block';
-                    alert('Account created! You can now leave comments.');
-                } else {
-                    alert('Error creating account.');
-                }
-            } else {
-                alert('Please fill out all fields.');
-            }
-        });
+    <nav class="navbar">
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
 
-        document.getElementById('postCommentBtn').addEventListener('click', () => {
-            const comment = commentInput.value;
-            if (userLoggedIn && comment) {
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-                commentElement.textContent = comment;
-                commentsContainer.appendChild(commentElement);
-                commentInput.value = '';
-            } else {
-                alert('You must be logged in to post a comment.');
-            }
-        });
-    </script>
+    <section class="hero">
+        <div>
+            <h1>iRepel Ad Blocker</h1>
+            <p>Stop ads and browse faster with our simple, easy-to-use ad blocker.</p>
+            <button>Get iRepel Now</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Block Ads</h3>
+            <p>Get rid of ads while you browse the web, making your experience cleaner and quicker.</p>
+        </div>
+        <div class="feature">
+            <h3>Safe Browsing</h3>
+            <p>iRepel blocks harmful scripts and trackers to keep your browsing private.</p>
+        </div>
+        <div class="feature">
+            <h3>Easy to Use</h3>
+            <p>Install quickly and start blocking ads right away without any hassle.</p>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Try iRepel Now</h2>
+        <button>Download iRepel</button>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 iRepel | <a href="#">Privacy Policy</a></p>
+    </footer>
+
 </body>
 </html>
