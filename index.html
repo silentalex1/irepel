@@ -14,6 +14,9 @@
             --text-color: #333;
             --bg-color: #f8f9fa;
             --white: #fff;
+            --dark-bg: #1f1f1f;
+            --light-bg: #ececec;
+            --transition-time: 0.3s;
         }
 
         * {
@@ -42,20 +45,22 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            padding: 15px 0;
+            transition: all var(--transition-time) ease;
         }
 
         .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            transition: color var(--transition-time) ease;
         }
 
         .nav-links {
@@ -67,74 +72,87 @@
             text-decoration: none;
             margin-left: 30px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding: 8px 15px;
+            transition: all var(--transition-time) ease;
+            border-radius: 5px;
         }
 
         .nav-links a:hover {
             color: var(--primary-color);
+            background-color: var(--light-bg);
         }
 
         .hero {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--white);
-            padding: 150px 0 100px;
+            padding: 160px 0 100px;
             text-align: center;
+            background-size: cover;
+            background-position: center;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 20px;
-            animation: fadeInUp 1s ease;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease forwards;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 600px;
             margin: 0 auto 40px;
-            animation: fadeInUp 1s ease 0.2s;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.2s forwards;
         }
 
         .btn {
             display: inline-block;
             background-color: var(--accent-color);
             color: var(--white);
-            padding: 12px 30px;
-            border-radius: 30px;
+            padding: 14px 35px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.4s;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.4s forwards;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .features {
             padding: 100px 0;
             background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
+            margin-top: 20px;
         }
 
         .feature {
             text-align: center;
             padding: 40px;
-            border-radius: 10px;
-            background-color: var(--bg-color);
+            border-radius: 15px;
+            background-color: var(--light-bg);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .feature:hover {
             transform: translateY(-10px);
+            background-color: var(--dark-bg);
+            color: var(--white);
         }
 
         .feature i {
@@ -144,34 +162,40 @@
         }
 
         .feature h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
             color: var(--primary-color);
         }
 
+        .feature:hover i, .feature:hover h3 {
+            color: var(--accent-color);
+        }
+
         .cta {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             padding: 100px 0;
             text-align: center;
             color: var(--white);
         }
 
         .cta h2 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease forwards;
         }
 
         .footer {
-            background-color: var(--text-color);
+            background-color: var(--dark-bg);
             color: var(--white);
             padding: 60px 0;
             text-align: center;
+            margin-top: 60px;
         }
 
         .footer a {
             color: var(--secondary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color var(--transition-time) ease;
         }
 
         .footer a:hover {
@@ -181,7 +205,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -191,11 +215,13 @@
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
+
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
             .nav-links {
                 display: none;
             }
@@ -225,6 +251,7 @@
 
     <section class="features">
         <div class="container">
+            <h2 class="section-title">Features</h2>
             <div class="features-grid">
                 <div class="feature">
                     <i class="fas fa-shield-alt"></i>
