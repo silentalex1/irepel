@@ -5,67 +5,6 @@ const helmet = require('helmet');
 const cluster = require('cluster');
 const os = require('os');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
-
-// Initialize Express app
-const app = express();
-const PORT = process.env.PORT || 8080;
-const WORKERS = process.env.WORKERS || os.cpus().length;
-
-// Security middleware
-app.use(helmet());
-app.use(cors());
-
-// Rate limiter to handle incoming traffic more efficiently and avoid abuse
-const rateLimiter = new RateLimiterMemory({
-  points: 5, // Max 5 requests
-  duration: 1, // Per 1 second by IP
-});
-
-// Proxy Service
-app.get('/proxy', async (req, res) => {
-  const url = req.query.url;
-
-  if (!url) {
-    return res.status(400).send('URL parameter is required');
-  }
-
-  try {
-    // Applying rate limiter
-    await rateLimiter.consume(req.ip);
-
-    // Fetch the content of the provided URL
-    const response = await fetch(url, { timeout: 5000 }); // Timeout of 5 seconds
-    const body = await response.text();
-
-    // Return the content to the client
-    res.status(200).send(body);
-
-  } catch (error) {
-    if (error instanceof Error && error.name === 'FetchError') {
-      console.error('Error fetching URL:', error);
-      res.status(504).send('The requested URL is unreachable.');
-    } else if (error instanceof Error && error.name === 'RateLimiterRes') {
-      res.status(429).send('Too many// Too many requests
-      res.status(429).send('Too many requests. Please try again later.');
-    } else {
-      console.error('Server error:', error);
-      res.status(500).send('An internal server error occurred.');
-    }
-  }
-});
-
-// Server setup
-if (cluster.isMaster) {
-  console.log(`Master ${process.pid} is running`);
-
-  // Fork workers
-  for (let i = 0; i < WORKERS; i++) {const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch');
-const helmet = require('helmet');
-const cluster = require('cluster');
-const os = require('os');
-const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { URL } = require('url');
 const compression = require('compression');
 const morgan = require('morgan');
@@ -192,15 +131,3 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} died`);
-  });
-} else {
-  // Workers can share any TCP connection
-  app.listen(PORT, () => {
-    console.log(`Worker ${process.pid} is listening on port ${PORT}`);
-  });
-}
