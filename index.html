@@ -12,7 +12,6 @@
       --secondary-color: #a29bfe;
       --background-color: #0f0f1a;
       --text-color: #ffffff;
-      --navbar-bg: rgba(255, 255, 255, 0.1);
     }
 
     * {
@@ -22,48 +21,11 @@
     }
 
     body {
-      background-color: var(--background-color);
+      background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
       color: var(--text-color);
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
-    }
-
-    /* Navbar Styles */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--navbar-bg);
-      backdrop-filter: blur(10px);
-      padding: 10px 20px;
-      z-index: 1000;
-      border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar ul {
-      list-style-type: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .navbar li a {
-      color: var(--text-color);
-      text-decoration: none;
-      font-size: 1em;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 8px 16px;
-      border-radius: 20px;
-    }
-
-    .navbar li a:hover {
-      background-color: var(--primary-color);
-      color: var(--background-color);
     }
 
     .content {
@@ -71,18 +33,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: calc(100vh - 60px); /* Adjust height to account for navbar */
-      padding-top: 60px; /* Space for navbar */
+      height: 100vh;
+      padding: 20px;
     }
 
     .bat-prox-heading {
-      font-size: clamp(2em, 5vw, 3em);
-      font-weight: bold;
+      font-size: clamp(2.5em, 5vw, 3em);
+      font-weight: 500;
       margin-bottom: 30px;
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .bat-text {
+      color: #f7f7f7;
+      margin-right: 10px;
+    }
+
+    .prox-text {
+      color: #efefef;
     }
 
     .cool-typing-box {
@@ -95,6 +63,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cool-typing-box:focus-within {
+      box-shadow: 0 0 0 3px var(--secondary-color);
     }
 
     .editable-text {
@@ -102,146 +76,193 @@
       border: none;
       color: var(--text-color);
       font-size: 1.2em;
-      width: calc(100% - 20px); /* Adjust for padding */
+      width: 90%;
       outline: none;
+      text-align: center;
     }
 
     .editable-text::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-        text-align:center; /* Center placeholder text */
+      color: rgba(255, 255, 255, 0.5);
     }
 
     #status {
-        margin-top: 20px; 
-        font-size:1em; 
-        text-align:center; 
-        color:variables(--secondary-color); 
-     }
-     
-     .loading {
-        display:none; 
-        width :40 px; 
-        height :40 px; 
-        border :3 px solid var(--secondary-color); 
-        border-top :3 px solid var(--primary-color); 
-        border-radius :50%; 
-        animation :spin1s linear infinite; 
-        margin :20 px auto; 
-     }
-     
-     @keyframes spin { 
-        from { transform :rotate(0deg); } 
-        to { transform :rotate(360deg); } 
-     }
-     
-     #particles-js { 
-        position :fixed; 
-        top :0; 
-        left :0; 
-        width :100%; 
-        height :100%; 
-        z-index :-1; 
-     }
-     
-     @media (max-width :768 px) { 
-       .navbar { padding :10 px; } 
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: center;
+      color: var(--secondary-color);
+    }
 
-       .content { margin-top :120 px; } 
-     }
-   </style>
-   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    .loading {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--secondary-color);
+      border-top: 3px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Detached Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 10px 20px;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar li a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+
+    .navbar li a:hover {
+      background-color: var(--primary-color);
+      color: var(--background-color);
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 8px 16px;
+      }
+
+      .navbar ul {
+        gap: 10px;
+      }
+
+      .navbar li a {
+        padding: 6px 12px;
+        font-size: 0.8em;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-   <nav class="navbar">
-     <ul>
-       <li><a href="#movies">Movies</a></li>
-       <li><a href="#games">Games</a></li>
-       <li><a href="#settings">Settings</a></li>
-     </ul>
-   </nav>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#movies">Movies</a></li>
+      <li><a href="#games">Games</a></li>
+      <li><a href="#settings">Settings</a></li>
+    </ul>
+  </nav>
 
-   <div class="content">
-     <h1 class="bat-prox-heading">Bat Prox</h1>
+  <div class="content">
+    <h1 class="bat-prox-heading">
+      <span class="bat-text">Bat</span><span class="prox-text">Prox</span>
+    </h1>
 
-     <div class="cool-typing-box">
-       <input type="text" id="urlbar" class="editable-text" placeholder="Enter URL to unblock" onfocus="this.placeholder='';"
-         onblur="this.placeholder='Enter URL to unblock';">
-     </div>
+    <div class="cool-typing-box">
+      <input type="text" id="urlbar" class="editable-text" placeholder="Enter URL to unblock" onfocus="this.placeholder='';"
+        onblur="this.placeholder='Enter URL to unblock';">
+    </div>
 
-     <div id="loading" class="loading"></div>
-     <div id="status"></div>
-   </div>
+    <div id="loading" class="loading"></div>
+    <div id="status"></div>
+  </div>
 
-   <div id="particles-js"></div>
+  <div id="particles-js"></div>
 
-   <script>
-     const input = document.getElementById("urlbar");
-     const statusDiv = document.getElementById("status");
-     const loadingDiv = document.getElementById("loading");
+  <script>
+    const input = document.getElementById("urlbar");
+    const statusDiv = document.getElementById("status");
+    const loadingDiv = document.getElementById("loading");
 
-     input.addEventListener("keypress", function (event) {
-       if (event.key === "Enter") {
-         runService();
-       }
-     });
+    input.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        runService();
+      }
+    });
 
-     async function runService() {
-       const url = input.value.trim();
-       if (!url) {
-         statusDiv.textContent = "Please enter a URL";
-         return;
-       }
+    async function runService() {
+      const url = input.value;
+      if (!url) {
+        statusDiv.textContent = "Please enter a URL";
+        return;
+      }
 
-       statusDiv.textContent = "Processing...";
-       loadingDiv.style.display = "block";
+      statusDiv.textContent = "Processing...";
+      loadingDiv.style.display = "block";
 
-       try {
-         const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`, {
-           method:'GET',
-           headers:{
-             'X-Requested-With':'XMLHttpRequest'
-           }
-         });
+      try {
+        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`, {
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-         if (!response.ok) {
-           throw new Error(`HTTP error! status:${response.status}`);
-         }
+        const contentType = response.headers.get("content-type");
+        const data = await response.text();
 
-         const contentType = response.headers.get("content-type");
-         const data = await response.text();
+        const blob = new Blob([data], { type: contentType || 'text/html' });
+        const blobUrl = URL.createObjectURL(blob);
 
-         const blob = new Blob([data], { type :contentType || 'text/html' });
-         const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, '_blank');
 
-         window.open(blobUrl, '_blank');
+        statusDiv.textContent = "Content loaded successfully!";
+      } catch (error) {
+        console.error('Error:', error);
+        statusDiv.textContent = `Error: ${error.message}`;
+      } finally {
+        loadingDiv.style.display = "none";
+      }
+    }
 
-         statusDiv.textContent = "Content loaded successfully!";
-       } catch (error) {
-         console.error('Error:', error);
-         statusDiv.textContent = `Error:${error.message}`;
-       } finally {
-         loadingDiv.style.display = "none";
-       }
-     }
-
-     particlesJS("particles-js", {
-       particles:{
-         number:{ value :80,density:{ enable:true,value_area :800 }},
-         color:{ value:"#6c5ce7" },
-         shape:{ type:"circle" },
-         opacity:{ value:.5,random:true },
-         size:{ value :3,random:true },
-         move:{ enable:true,speed :1,direction :"none",random:true,out_mode :"out" }
-       },
-       interactivity:{
-         events:{
-           onhover:{ enable:true,mode:"repulse" },
-           onclick:{ enable:true,mode:"push" }
-         }
-       }
-     });
-   </script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" }
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>
