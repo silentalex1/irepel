@@ -8,8 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background: radial-gradient(circle at center, #000033, #000000);
-      background: linear-gradient(to bottom, #000033, #000000 70%, #000080); /* Updated mixed color */
+      background: linear-gradient(135deg, #000033, #000000 70%, #000080);
       color: white;
       margin: 0;
       padding: 0;
@@ -17,45 +16,22 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      /* Centered content vertically */
       height: 100vh;
       font-family: 'Oswald', sans-serif;
-      /* Use Oswald font */
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 250px;
-      height: 100%;
-      background-color: #000;
-      padding-top: 20px;
-      color: white;
-      display: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      z-index: 999;
-    }
-
-    .sidebar-close {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      cursor: pointer;
-      color: white;
-      font-size: 20px;
+      overflow: hidden;
     }
 
     .bat-prox-heading {
-      font-size: 2em;
+      font-size: 3em;
       font-weight: bold;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
+      letter-spacing: 2px;
     }
 
     .bat-text {
-      color: white; /* Change the font color to white */
+      color: white;
       margin-right: 5px;
     }
 
@@ -64,28 +40,23 @@
     }
 
     .cool-typing-box {
-      position: relative;
-      width: 300px;
-      /* Adjusted width */
+      width: 320px;
       height: 60px;
-      /* Adjusted height */
-      background: rgba(255, 255, 255, 0.2);
-      /* Transparent white */
+      background: rgba(255, 255, 255, 0.1);
       border: 2px solid white;
       border-radius: 10px;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      /* Smooth transition */
-      z-index: 2;
-      /* Ensure the input box stays above the particles */
+      margin-bottom: 15px;
     }
 
     .cool-typing-text {
       color: white;
       font-size: 1.5em;
+      font-weight: bold;
+      letter-spacing: 1.5px;
     }
 
     .editable-text {
@@ -93,26 +64,17 @@
       border: none;
       color: white;
       font-size: 1.5em;
-      width: 100%;
+      width: 90%;
       outline: none;
       text-align: center;
     }
 
-    .timer {
-      font-size: 1.2em;
-      margin-top: 10px;
-      font-weight: bold;
+    .editable-text::placeholder {
+      color: rgba(255, 255, 255, 0.6);
     }
 
-    .random-font-description {
-      font-size: 1em;
-      margin-top: 10px;
-    }
-
-    /* Animation on focus */
     .cool-typing-box:focus-within {
       width: 350px;
-      /* Expanded width */
     }
 
     .version-text {
@@ -124,44 +86,64 @@
       opacity: 0.8;
     }
 
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding-top: 20px;
+      color: white;
+      display: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.show {
+      display: block;
+      transform: translateX(0);
+    }
+
+    .sidebar-close {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
     #particles-js {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: #000; /* Black background for particles */
+      background: transparent;
       z-index: -1;
     }
   </style>
-  <!-- Include Particles.js script -->
+
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-close" onclick="closeSidebar()">X</div>
-    <!-- Add your sidebar content here -->
-    <p>Settings Content</p>
-  </div>
   <div class="bat-prox-heading">
     <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
   </div>
+
   <div class="cool-typing-box">
-    <input type="text" id="urlbar" class="editable-text" value="Access Freely"
-      onfocus="if(this.value=='Access Freely')this.value='';"
-      onblur="if(this.value=='') this.value='Access Freely';">
+    <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
+      onblur="this.placeholder='Access Freely';">
   </div>
-  <div class="random-font-description" id="randomDescription"></div>
-  <div class="timer" id="timer"></div>
+
   <div class="version-text">v1</div>
 
-  <!-- Particles.js container -->
   <div id="particles-js"></div>
 
   <script src="script.js"></script>
 
   <script>
-    var input = document.getElementById("urlbar");
-
+    const input = document.getElementById("urlbar");
     input.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         runService();
@@ -169,27 +151,17 @@
     });
 
     function runService() {
-      console.log(urlbar.value);
+      console.log(input.value);
     }
 
-    // Remove the default context menu for the input with id "urlbar"
     document.getElementById("urlbar").addEventListener("contextmenu", function (e) {
       e.preventDefault();
-    });
-
-    document.getElementById("urlbar").addEventListener("contextmenu", function (e) {
-      e.preventDefault();
-      document.getElementById("sidebar").style.display = "block";
+      document.getElementById("sidebar").classList.toggle("show");
     });
 
     function closeSidebar() {
-      document.getElementById("sidebar").style.display = "none";
+      document.getElementById("sidebar").classList.remove("show");
     }
-
-    // Remove the default context menu for the entire document
-    document.addEventListener("contextmenu", function (e) {
-      e.preventDefault();
-    });
 
     // Particles.js configuration
     particlesJS("particles-js", {
@@ -202,7 +174,7 @@
           }
         },
         color: {
-          value: "#ffffff" // Set particles color to white
+          value: "#ffffff"
         },
         shape: {
           type: "circle",
@@ -210,55 +182,21 @@
             width: 0,
             color: "#000000"
           },
-          polygon: {
-            nb_sides: 5
-          },
-          image: {
-            src: "img/github.svg",
-            width: 100,
-            height: 100
-          }
         },
         opacity: {
-          value: 0.5,
-          random: false,
-          anim: {
-            enable: false,
-            speed: 1,
-            opacity_min: 0.1,
-            sync: false
-          }
+          value: 0.5
         },
         size: {
           value: 3,
-          random: true,
-          anim: {
-            enable: false,
-            speed: 40,
-            size_min: 0.1,
-            sync: false
-          }
-        },
-        line_linked: {
-          enable: false, // Disable lines between particles
+          random: true
         },
         move: {
           enable: true,
           speed: 6,
-          direction: "none",
-          random: false,
-          straight: false,
-          out_mode: "out",
-          bounce: false,
-          attract: {
-            enable: false,
-            rotateX: 600,
-            rotateY: 1200
-          }
+          out_mode: "out"
         }
       },
       interactivity: {
-        detect_on: "canvas",
         events: {
           onhover: {
             enable: true,
@@ -267,32 +205,6 @@
           onclick: {
             enable: true,
             mode: "push"
-          },
-          resize: true
-        },
-        modes: {
-          grab: {
-            distance: 400,
-            line_linked: {
-              opacity: 1
-            }
-          },
-          bubble: {
-            distance: 400,
-            size: 40,
-            duration: 2,
-            opacity: 8,
-            speed: 3
-          },
-          repulse: {
-            distance: 200,
-            duration: 0.4
-          },
-          push: {
-            particles_nb: 4
-          },
-          remove: {
-            particles_nb: 2
           }
         }
       },
