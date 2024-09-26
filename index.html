@@ -5,8 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bat Prox</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #6c5ce7;
+      --secondary-color: #a29bfe;
+      --background-color: #0f0f1a;
+      --text-color: #ffffff;
+      --navbar-bg: rgba(255, 255, 255, 0.05);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -14,116 +22,80 @@
     }
 
     body {
-      background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
-      color: white;
-      font-family: 'Roboto', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .content {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
       padding: 20px;
+      margin-top: 60px;
     }
 
     .bat-prox-heading {
-      font-family: 'Oswald', sans-serif;
-      font-size: 2.5em;
-      font-weight: bold;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-      transition: transform 0.3s ease;
-    }
-
-    .bat-prox-heading:hover {
-      transform: scale(1.05);
-    }
-
-    .bat-text {
-      color: #f7f7f7;
-      margin-right: 10px;
-    }
-
-    .prox-text {
-      color: #efefef;
+      font-size: clamp(2em, 5vw, 3em);
+      font-weight: 600;
+      margin-bottom: 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .cool-typing-box {
-      width: 350px;
+      width: 90%;
+      max-width: 400px;
       height: 60px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #ffffff;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid var(--primary-color);
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-      padding: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .cool-typing-box:hover {
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+    .cool-typing-box:focus-within {
+      box-shadow: 0 0 0 3px var(--secondary-color);
     }
 
     .editable-text {
       background: none;
       border: none;
-      color: white;
-      font-size: 1.5em;
-      width: 95%;
+      color: var(--text-color);
+      font-size: 1.2em;
+      width: 90%;
       outline: none;
       text-align: center;
-      letter-spacing: 1px;
     }
 
     .editable-text::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .version-text {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      color: white;
-      font-size: 1.3em;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
-    }
-
-    .version-text:hover {
-      opacity: 1;
-    }
-
-    #particles-js {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      z-index: -1;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     #status {
       margin-top: 20px;
-      font-size: 1.2em;
+      font-size: 1em;
       text-align: center;
+      color: var(--secondary-color);
     }
 
     .loading {
       display: none;
-      width: 50px;
-      height: 50px;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--secondary-color);
+      border-top: 3px solid var(--primary-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 20px auto;
@@ -134,38 +106,85 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Navbar Styles */
+    /* Improved Navbar Styles */
     .navbar {
       position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.1);
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--navbar-bg);
       backdrop-filter: blur(10px);
-      border-radius: 25px;
       padding: 10px 20px;
       z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
 
     .navbar ul {
       list-style-type: none;
       display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 20px;
     }
 
     .navbar li a {
-      color: white;
+      color: var(--text-color);
       text-decoration: none;
-      font-size: 1em;
-      font-weight: 300;
+      font-size: 0.9em;
+      font-weight: 500;
       transition: all 0.3s ease;
-      padding: 5px 10px;
-      border-radius: 15px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--primary-color);
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar li a:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .navbar li a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--background-color);
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .navbar {
+        padding: 10px;
+      }
+
+      .content {
+        margin-top: 120px;
+      }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -181,19 +200,15 @@
   </nav>
 
   <div class="content">
-    <div class="bat-prox-heading">
-      <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
-    </div>
+    <h1 class="bat-prox-heading">Bat Prox</h1>
 
     <div class="cool-typing-box">
-      <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
-        onblur="this.placeholder='Access Freely';">
+      <input type="text" id="urlbar" class="editable-text" placeholder="Enter URL to unblock" onfocus="this.placeholder='';"
+        onblur="this.placeholder='Enter URL to unblock';">
     </div>
 
     <div id="loading" class="loading"></div>
     <div id="status"></div>
-
-    <div class="version-text">v1.4</div>
   </div>
 
   <div id="particles-js"></div>
@@ -234,11 +249,9 @@
         const contentType = response.headers.get("content-type");
         const data = await response.text();
 
-        // Create a blob with the received data
-        const blob = new Blob([data], { type: contentType || 'text/plain' });
+        const blob = new Blob([data], { type: contentType || 'text/html' });
         const blobUrl = URL.createObjectURL(blob);
 
-        // Open the blob URL in a new tab
         window.open(blobUrl, '_blank');
 
         statusDiv.textContent = "Content loaded successfully!";
@@ -253,22 +266,18 @@
     particlesJS("particles-js", {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffffff" },
-        shape: {
-          type: "circle",
-          stroke: { width: 0, color: "#000000" }
-        },
+        color: { value: "#6c5ce7" },
+        shape: { type: "circle" },
         opacity: { value: 0.5, random: true },
         size: { value: 3, random: true },
-        move: { enable: true, speed: 2, direction: "none", random: true, out_mode: "out" }
+        move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
       },
       interactivity: {
         events: {
           onhover: { enable: true, mode: "repulse" },
           onclick: { enable: true, mode: "push" }
         }
-      },
-      retina_detect: true
+      }
     });
   </script>
 </body>
