@@ -2,70 +2,205 @@ const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const compression = require('compression');
 const cluster = require('cluster');
 const os = require('os');
-
-// Environment Variables
-const PORT = process.env.PORT || 8080;
-const WORKERS = process.env.WORKERS || os.cpus().length;
+const { RateLimiterMemory } = require('rate-limiter-flexible');
 
 // Initialize Express app
 const app = express();
+const PORT = process.env.PORT || 8080;
+const WORKERS = process.env.WORKERS || os.cpus().length;
 
-// Middleware to secure headers and improve performance
+// Security middleware
 app.use(helmet());
 app.use(cors());
-app.use(express.json());
-app.use(compression()); // Compresses all responses
 
-// Basic rate limiting to prevent abuse
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute window
-  max: 100, // Limit each IP to 100 requests per windowMs
+// Rate limiter to handle incoming traffic more efficiently and avoid abuse
+const rateLimiter = new RateLimiterMemory({
+  points: 5, // Max 5 requests
+  duration: 1, // Per 1 second by IP
 });
-app.use(limiter);
 
-// Cluster setup to maximize CPU usage for performance boost
+// Proxy Service
+app.get('/proxy', async (req, res) => {
+  const url = req.query.url;
+
+  if (!url) {
+    return res.status(400).send('URL parameter is required');
+  }
+
+  try {
+    // Applying rate limiter
+    await rateLimiter.consume(req.ip);
+
+    // Fetch the content of the provided URL
+    const response = await fetch(url, { timeout: 5000 }); // Timeout of 5 seconds
+    const body = await response.text();
+
+    // Return the content to the client
+    res.status(200).send(body);
+
+  } catch (error) {
+    if (error instanceof Error && error.name === 'FetchError') {
+      console.error('Error fetching URL:', error);
+      res.status(504).send('The requested URL is unreachable.');
+    } else if (error instanceof Error && error.name === 'RateLimiterRes') {
+      res.status(429).send('Too many// Too many requests
+      res.status(429).send('Too many requests. Please try again later.');
+    } else {
+      console.error('Server error:', error);
+      res.status(500).send('An internal server error occurred.');
+    }
+  }
+});
+
+// Server setup
 if (cluster.isMaster) {
   console.log(`Master ${process.pid} is running`);
 
-  // Fork workers.
+  // Fork workers
+  for (let i = 0; i < WORKERS; i++) {const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const helmet = require('helmet');
+const cluster = require('cluster');
+const os = require('os');
+const { RateLimiterMemory } = require('rate-limiter-flexible');
+const { URL } = require('url');
+const compression = require('compression');
+const morgan = require('morgan');
+const Redis = require('ioredis');
+const NodeCache = require('node-cache');
+
+const app = express();
+const PORT = process.env.PORT || 8080;
+const WORKERS = process.env.WORKERS || os.cpus().length;
+
+app.use(helmet());
+app.use(cors());
+app.use(compression());
+app.use(morgan('combined'));
+
+const redis = new Redis(process.env.REDIS_URL);
+const localCache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
+
+const rateLimiter = new RateLimiterMemory({
+  points: 20,
+  duration: 1,
+});
+
+const whitelist = new Set(['example.com', 'api.example.com']);
+
+const proxyHandler = async (req, res) => {
+  const urlParam = req.query.url;
+
+  if (!urlParam) {
+    return res.status(400).json({ error: 'URL parameter is required' });
+  }
+
+  try {
+    const url = new URL(urlParam);
+    
+    if (!whitelist.has(url.hostname)) {
+      return res.status(403).json({ error: 'Domain not allowed' });
+    }
+
+    await rateLimiter.consume(req.ip);
+
+    const cacheKey = `proxy:${url.toString()}`;
+    let cachedResponse = localCache.get(cacheKey);
+
+    if (!cachedResponse) {
+      cachedResponse = await redis.get(cacheKey);
+      if (cachedResponse) {
+        localCache.set(cacheKey, cachedResponse);
+      }
+    }
+
+    if (cachedResponse) {
+      const { contentType, body } = JSON.parse(cachedResponse);
+      res.type(contentType || 'text/plain');
+      return res.status(200).send(body);
+    }
+
+    const response = await fetch(url.toString(), { 
+      timeout: 5000,
+      headers: {
+        'User-Agent': 'UnblockerProxy/2.0',
+        'Accept-Encoding': 'gzip, deflate, br',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const contentType = response.headers.get('content-type');
+    const body = await response.text();
+
+    const cacheValue = JSON.stringify({ contentType, body });
+    localCache.set(cacheKey, cacheValue);
+    redis.set(cacheKey, cacheValue, 'EX', 300);
+
+    res.type(contentType || 'text/plain');
+    res.status(200).send(body);
+
+  } catch (error) {
+    console.error('Error:', error);
+
+    if (error instanceof Error) {
+      if (error.name === 'FetchError') {
+        res.status(504).json({ error: 'The requested URL is unreachable.' });
+      } else if (error.name === 'RateLimiterRes') {
+        res.status(429).json({ error: 'Too many requests. Please try again later.' });
+      } else if (error.name === 'TypeError' && error.message.includes('Invalid URL')) {
+        res.status(400).json({ error: 'Invalid URL provided.' });
+      } else {
+        res.status(500).json({ error: 'An internal server error occurred.' });
+      }
+    } else {
+      res.status(500).json({ error: 'An unknown error occurred.' });
+    }
+  }
+};
+
+app.get('/proxy', proxyHandler);
+
+app.get('/health', (req, res) => res.status(200).json({ status: 'OK' }));
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
   for (let i = 0; i < WORKERS; i++) {
     cluster.fork();
   }
 
-  // If a worker dies, restart it
   cluster.on('exit', (worker, code, signal) => {
     console.log(`Worker ${worker.process.pid} died. Restarting...`);
     cluster.fork();
   });
 } else {
-  // Proxy Service Route
-  app.get('/proxy', async (req, res) => {
-    const { url } = req.query;
-
-    // Basic URL validation
-    if (!url || !url.startsWith('http')) {
-      return res.status(400).send('Invalid URL parameter');
-    }
-
-    try {
-      // Fetch URL and respond with the content
-      const proxyResponse = await fetch(url);
-      const data = await proxyResponse.text();
-
-      // Return proxied data
-      res.status(200).send(data);
-    } catch (error) {
-      console.error('Error fetching the URL:', error.message);
-      res.status(500).send('Failed to fetch the requested page');
-    }
-  });
-
-  // Start server
   app.listen(PORT, () => {
-    console.log(`Worker ${process.pid} is running on port ${PORT}`);
+    console.log(`Worker ${process.pid} is listening on port ${PORT}`);
+  });
+}
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  app.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
+});
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+  });
+} else {
+  // Workers can share any TCP connection
+  app.listen(PORT, () => {
+    console.log(`Worker ${process.pid} is listening on port ${PORT}`);
   });
 }
