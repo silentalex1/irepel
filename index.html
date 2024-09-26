@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bat Prox</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -16,21 +16,24 @@
     body {
       background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
       color: white;
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .content {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      font-family: 'Oswald', sans-serif;
-      overflow: hidden;
-      position: relative;
       padding: 20px;
     }
 
     .bat-prox-heading {
+      font-family: 'Oswald', sans-serif;
       font-size: 2.5em;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       letter-spacing: 2px;
@@ -62,7 +65,6 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      margin-top: 20px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
       padding: 5px;
     }
@@ -131,24 +133,68 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 10px 20px;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: 300;
+      transition: all 0.3s ease;
+      padding: 5px 10px;
+      border-radius: 15px;
+    }
+
+    .navbar li a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-  <div class="bat-prox-heading">
-    <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#movies">Movies</a></li>
+      <li><a href="#games">Games</a></li>
+      <li><a href="#settings">Settings</a></li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <div class="bat-prox-heading">
+      <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
+    </div>
+
+    <div class="cool-typing-box">
+      <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
+        onblur="this.placeholder='Access Freely';">
+    </div>
+
+    <div id="loading" class="loading"></div>
+    <div id="status"></div>
+
+    <div class="version-text">v1.4</div>
   </div>
-
-  <div class="cool-typing-box">
-    <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
-      onblur="this.placeholder='Access Freely';">
-  </div>
-
-  <div id="loading" class="loading"></div>
-  <div id="status"></div>
-
-  <div class="version-text">v1.3</div>
 
   <div id="particles-js"></div>
 
@@ -174,7 +220,12 @@
       loadingDiv.style.display = "block";
 
       try {
-        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`);
+        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`, {
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -183,13 +234,14 @@
         const contentType = response.headers.get("content-type");
         const data = await response.text();
 
-        if (contentType && contentType.includes("text/html")) {
-          const blob = new Blob([data], { type: 'text/html' });
-          const blobUrl = URL.createObjectURL(blob);
-          window.open(blobUrl, '_blank');
-        } else {
-          statusDiv.textContent = "Received non-HTML content. Unable to display.";
-        }
+        // Create a blob with the received data
+        const blob = new Blob([data], { type: contentType || 'text/plain' });
+        const blobUrl = URL.createObjectURL(blob);
+
+        // Open the blob URL in a new tab
+        window.open(blobUrl, '_blank');
+
+        statusDiv.textContent = "Content loaded successfully!";
       } catch (error) {
         console.error('Error:', error);
         statusDiv.textContent = `Error: ${error.message}`;
@@ -200,15 +252,15 @@
 
     particlesJS("particles-js", {
       particles: {
-        number: { value: 100, density: { enable: true, value_area: 800 } },
+        number: { value: 80, density: { enable: true, value_area: 800 } },
         color: { value: "#ffffff" },
         shape: {
           type: "circle",
           stroke: { width: 0, color: "#000000" }
         },
-        opacity: { value: 0.6 },
+        opacity: { value: 0.5, random: true },
         size: { value: 3, random: true },
-        move: { enable: true, speed: 6, out_mode: "out" }
+        move: { enable: true, speed: 2, direction: "none", random: true, out_mode: "out" }
       },
       interactivity: {
         events: {
