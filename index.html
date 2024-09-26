@@ -19,6 +19,7 @@
       background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
       color: white;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
@@ -28,10 +29,11 @@
       padding: 20px;
     }
 
+    /* Adjusted the font size and margin for Bat Prox */
     .bat-prox-heading {
-      font-size: 4em;
+      font-size: 2.5em; /* Reduced size */
       font-weight: bold;
-      margin-bottom: 30px;
+      margin-bottom: 10px; /* Reduced spacing */
       display: flex;
       align-items: center;
       letter-spacing: 2px;
@@ -55,7 +57,7 @@
 
     .cool-typing-box {
       width: 350px;
-      height: 70px;
+      height: 60px;
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid #ffffff;
       border-radius: 12px;
@@ -63,7 +65,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      margin-bottom: 20px;
+      margin-top: 20px; /* Added margin-top to place it beneath the heading */
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
       padding: 5px;
     }
@@ -76,7 +78,7 @@
       background: none;
       border: none;
       color: white;
-      font-size: 1.7em;
+      font-size: 1.5em;
       width: 95%;
       outline: none;
       text-align: center;
@@ -111,7 +113,7 @@
       z-index: -1;
     }
 
-    /* Sidebar improvements */
+    /* Sidebar styling */
     .sidebar {
       position: fixed;
       top: 0;
@@ -147,17 +149,17 @@
     }
   </style>
 
-  <!-- Adding Particles.js -->
+  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-  <!-- Main heading -->
+  <!-- Main Heading -->
   <div class="bat-prox-heading">
     <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
   </div>
 
-  <!-- Cool typing input box -->
+  <!-- Input box placed underneath the heading -->
   <div class="cool-typing-box">
     <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
       onblur="this.placeholder='Access Freely';">
@@ -169,17 +171,6 @@
   <!-- Particle background -->
   <div id="particles-js"></div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <span class="sidebar-close" onclick="closeSidebar()">×</span>
-    <p>Quick Access</p>
-    <ul>
-      <li>Settings</li>
-      <li>FAQ</li>
-      <li>Support</li>
-    </ul>
-  </div>
-
   <script>
     // Event listener for the Enter key
     const input = document.getElementById("urlbar");
@@ -189,7 +180,7 @@
       }
     });
 
-    // Function to handle the proxy service request
+    // Proxy service logic
     function runService() {
       const url = input.value;
       fetch(`/proxy?url=${encodeURIComponent(url)}`)
@@ -199,17 +190,6 @@
           window.open(url, '_blank');
         })
         .catch(error => console.error('Error:', error));
-    }
-
-    // Sidebar toggle
-    input.addEventListener("contextmenu", function (e) {
-      e.preventDefault();
-      document.getElementById("sidebar").classList.toggle("show");
-    });
-
-    // Function to close sidebar
-    function closeSidebar() {
-      document.getElementById("sidebar").classList.remove("show");
     }
 
     // Particles.js configuration
