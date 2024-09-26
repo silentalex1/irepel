@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bat Prox</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
-
   <style>
-    /* General reset */
     * {
       margin: 0;
       padding: 0;
@@ -29,11 +27,10 @@
       padding: 20px;
     }
 
-    /* Adjusted the font size and margin for Bat Prox */
     .bat-prox-heading {
-      font-size: 2.5em; /* Reduced size */
+      font-size: 2.5em;
       font-weight: bold;
-      margin-bottom: 10px; /* Reduced spacing */
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       letter-spacing: 2px;
@@ -65,7 +62,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      margin-top: 20px; /* Added margin-top to place it beneath the heading */
+      margin-top: 20px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
       padding: 5px;
     }
@@ -113,86 +110,94 @@
       z-index: -1;
     }
 
-    /* Sidebar styling */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 260px;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      color: white;
-      padding: 20px;
+    #status {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    .loading {
       display: none;
-      transition: transform 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-      z-index: 10;
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
     }
 
-    .sidebar.show {
-      display: block;
-      transform: translateX(0);
-    }
-
-    .sidebar-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 22px;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-
-    .sidebar-close:hover {
-      color: #ff4f4f;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
-
-  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-  <!-- Main Heading -->
   <div class="bat-prox-heading">
     <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
   </div>
 
-  <!-- Input box placed underneath the heading -->
   <div class="cool-typing-box">
     <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
       onblur="this.placeholder='Access Freely';">
   </div>
 
-  <!-- Version Text -->
-  <div class="version-text">v1.2</div>
+  <div id="loading" class="loading"></div>
+  <div id="status"></div>
 
-  <!-- Particle background -->
+  <div class="version-text">v1.3</div>
+
   <div id="particles-js"></div>
 
   <script>
-    // Event listener for the Enter key
     const input = document.getElementById("urlbar");
+    const statusDiv = document.getElementById("status");
+    const loadingDiv = document.getElementById("loading");
+
     input.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         runService();
       }
     });
 
-    // Proxy service logic
-    function runService() {
+    async function runService() {
       const url = input.value;
-      fetch(`/proxy?url=${encodeURIComponent(url)}`)
-        .then(response => response.text())
-        .then(data => {
-          console.log('Proxy Result:', data);
-          window.open(url, '_blank');
-        })
-        .catch(error => console.error('Error:', error));
+      if (!url) {
+        statusDiv.textContent = "Please enter a URL";
+        return;
+      }
+
+      statusDiv.textContent = "Processing...";
+      loadingDiv.style.display = "block";
+
+      try {
+        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        const data = await response.text();
+
+        if (contentType && contentType.includes("text/html")) {
+          const blob = new Blob([data], { type: 'text/html' });
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl, '_blank');
+        } else {
+          statusDiv.textContent = "Received non-HTML content. Unable to display.";
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        statusDiv.textContent = `Error: ${error.message}`;
+      } finally {
+        loadingDiv.style.display = "none";
+      }
     }
 
-    // Particles.js configuration
     particlesJS("particles-js", {
       particles: {
         number: { value: 100, density: { enable: true, value_area: 800 } },
