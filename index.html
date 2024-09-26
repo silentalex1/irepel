@@ -6,99 +6,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bat Prox</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      background: linear-gradient(135deg, #000033, #000000 70%, #000080);
-      color: white;
+    /* General reset */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
       height: 100vh;
       font-family: 'Oswald', sans-serif;
       overflow: hidden;
+      position: relative;
+      padding: 20px;
     }
 
     .bat-prox-heading {
-      font-size: 3em;
+      font-size: 4em;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       display: flex;
       align-items: center;
       letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+    }
+
+    .bat-prox-heading:hover {
+      transform: scale(1.05);
     }
 
     .bat-text {
-      color: white;
-      margin-right: 5px;
+      color: #f7f7f7;
+      margin-right: 10px;
     }
 
     .prox-text {
-      color: white;
+      color: #efefef;
     }
 
     .cool-typing-box {
-      width: 320px;
-      height: 60px;
+      width: 350px;
+      height: 70px;
       background: rgba(255, 255, 255, 0.1);
-      border: 2px solid white;
-      border-radius: 10px;
+      border: 2px solid #ffffff;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      padding: 5px;
     }
 
-    .cool-typing-text {
-      color: white;
-      font-size: 1.5em;
-      font-weight: bold;
-      letter-spacing: 1.5px;
+    .cool-typing-box:hover {
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
     }
 
     .editable-text {
       background: none;
       border: none;
       color: white;
-      font-size: 1.5em;
-      width: 90%;
+      font-size: 1.7em;
+      width: 95%;
       outline: none;
       text-align: center;
+      letter-spacing: 1px;
     }
 
     .editable-text::placeholder {
       color: rgba(255, 255, 255, 0.6);
     }
 
-    .cool-typing-box:focus-within {
-      width: 350px;
-    }
-
     .version-text {
-      position: fixed;
+      position: absolute;
       bottom: 10px;
       right: 10px;
       color: white;
-      font-size: 1.5em;
+      font-size: 1.3em;
       opacity: 0.8;
+      transition: opacity 0.3s ease;
     }
 
+    .version-text:hover {
+      opacity: 1;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: -1;
+    }
+
+    /* Sidebar improvements */
     .sidebar {
       position: fixed;
       top: 0;
       left: 0;
-      width: 250px;
+      width: 260px;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      padding-top: 20px;
+      background-color: rgba(0, 0, 0, 0.95);
       color: white;
+      padding: 20px;
       display: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-      z-index: 999;
       transition: transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+      z-index: 10;
     }
 
     .sidebar.show {
@@ -109,40 +135,53 @@
     .sidebar-close {
       position: absolute;
       top: 10px;
-      left: 10px;
+      right: 10px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      transition: color 0.3s ease;
     }
 
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      z-index: -1;
+    .sidebar-close:hover {
+      color: #ff4f4f;
     }
   </style>
 
+  <!-- Adding Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
+  <!-- Main heading -->
   <div class="bat-prox-heading">
     <span class="bat-text">Bat</span> <span class="prox-text">Prox</span>
   </div>
 
+  <!-- Cool typing input box -->
   <div class="cool-typing-box">
     <input type="text" id="urlbar" class="editable-text" placeholder="Access Freely" onfocus="this.placeholder='';"
       onblur="this.placeholder='Access Freely';">
   </div>
 
-  <div class="version-text">v1</div>
+  <!-- Version Text -->
+  <div class="version-text">v1.2</div>
 
+  <!-- Particle background -->
   <div id="particles-js"></div>
 
-  <script src="script.js"></script>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <span class="sidebar-close" onclick="closeSidebar()">×</span>
+    <p>Quick Access</p>
+    <ul>
+      <li>Settings</li>
+      <li>FAQ</li>
+      <li>Support</li>
+    </ul>
+  </div>
 
   <script>
+    // Event listener for the Enter key
     const input = document.getElementById("urlbar");
     input.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
@@ -150,15 +189,25 @@
       }
     });
 
+    // Function to handle the proxy service request
     function runService() {
-      console.log(input.value);
+      const url = input.value;
+      fetch(`/proxy?url=${encodeURIComponent(url)}`)
+        .then(response => response.text())
+        .then(data => {
+          console.log('Proxy Result:', data);
+          window.open(url, '_blank');
+        })
+        .catch(error => console.error('Error:', error));
     }
 
-    document.getElementById("urlbar").addEventListener("contextmenu", function (e) {
+    // Sidebar toggle
+    input.addEventListener("contextmenu", function (e) {
       e.preventDefault();
       document.getElementById("sidebar").classList.toggle("show");
     });
 
+    // Function to close sidebar
     function closeSidebar() {
       document.getElementById("sidebar").classList.remove("show");
     }
@@ -166,46 +215,20 @@
     // Particles.js configuration
     particlesJS("particles-js", {
       particles: {
-        number: {
-          value: 80,
-          density: {
-            enable: true,
-            value_area: 800
-          }
-        },
-        color: {
-          value: "#ffffff"
-        },
+        number: { value: 100, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
         shape: {
           type: "circle",
-          stroke: {
-            width: 0,
-            color: "#000000"
-          },
+          stroke: { width: 0, color: "#000000" }
         },
-        opacity: {
-          value: 0.5
-        },
-        size: {
-          value: 3,
-          random: true
-        },
-        move: {
-          enable: true,
-          speed: 6,
-          out_mode: "out"
-        }
+        opacity: { value: 0.6 },
+        size: { value: 3, random: true },
+        move: { enable: true, speed: 6, out_mode: "out" }
       },
       interactivity: {
         events: {
-          onhover: {
-            enable: true,
-            mode: "repulse"
-          },
-          onclick: {
-            enable: true,
-            mode: "push"
-          }
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" }
         }
       },
       retina_detect: true
