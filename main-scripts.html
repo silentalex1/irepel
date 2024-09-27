@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +32,8 @@
             flex-direction: column;
             align-items: center;
             padding: 100px 20px 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .navbar {
@@ -69,10 +70,16 @@
             color: var(--background-color);
         }
 
-        .search-bar {
+        .search-container {
+            display: flex;
             width: 100%;
             max-width: 600px;
             margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
         }
 
         .search-bar input {
@@ -95,6 +102,48 @@
 
         .search-bar input::placeholder {
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .category-dropdown {
+            position: relative;
+            width: 150px;
+        }
+
+        .category-dropdown select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);  
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(108, 92, 231, 0.1);
+            appearance: none;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .category-dropdown::after {
+            content: '\25BC';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-color);
+        }
+
+        .category-dropdown select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .category-dropdown select option {
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
 
         .scripts-container {
@@ -148,36 +197,45 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
-
 <body>
     <nav class="navbar">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="alex-scripts.html">Alex Scripts</a></li>
-            <li><a href="https://discord.gg/xsPtEeb2rU" target="_blank">Discord Server</a></li>
+            <li><a href="https://discord.gg/your-invite-link" target="_blank">Discord Server</a></li>
         </ul>
     </nav>
 
+    <div id="particles-js"></div>
+
     <div class="content">
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search scripts..." onkeyup="searchScripts()">
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search scripts..." onkeyup="filterScripts()">
+            </div>
+            <div class="category-dropdown">
+                <select id="categorySelect" onchange="filterScripts()">
+                    <option value="all">All Scripts</option>
+                    <option value="admin">Admin Scripts</option>
+                    <option value="mm2">MM2</option>
+                    <option value="dahood">Dahood</option>
+                </select>
+            </div>
         </div>
 
         <div class="scripts-container">
-            <div class="script-holder">
+            <div class="script-holder" data-category="admin">
                 <h3>Infinite Yield</h3>
-                <p>Roblox admin script.</p>
+                <p>Powerful admin script for Roblox.</p>
                 <button class="copy-btn" onclick="copyScript('infinite-yield')">Copy Script</button>
             </div>
         </div>
     </div>
-
-    <div id="particles-js"></div>
 
     <script>
         particlesJS("particles-js", {
@@ -191,14 +249,18 @@
             },
             interactivity: {
                 events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" }
+                    onhover: { enable: false, mode: "repulse" },  
+                    onclick: { enable: false, mode: "push" }   
                 }
             }
         });
 
         function copyScript(scriptId) {
-            const scriptUrl = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source";
+            const scriptUrls = {
+                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
+            };
+            
+            const scriptUrl = scriptUrls[scriptId];
             navigator.clipboard.writeText(scriptUrl).then(function() {
                 alert("Script URL copied to clipboard!");
             }, function(err) {
@@ -206,23 +268,25 @@
             });
         }
 
-        function searchScripts() {
-            var input, filter, scriptHolders, h3, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            scriptHolders = document.getElementsByClassName("script-holder");
+        function filterScripts() {
+            const searchInput = document.getElementById("searchInput").value.toUpperCase();
+            const categorySelect = document.getElementById("categorySelect").value;
+            const scripts = document.querySelectorAll(".script-holder");
 
-            for (i = 0; i < scriptHolders.length; i++) {
-                h3 = scriptHolders[i].getElementsByTagName("h3")[0];
-                txtValue = h3.textContent || h3.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    scriptHolders[i].style.display = "";
+            scripts.forEach(script => {
+                const scriptName = script.querySelector("h3").textContent.toUpperCase();
+                const scriptCategory = script.getAttribute("data-category");
+
+                const matchesSearch = scriptName.includes(searchInput);
+                const matchesCategory = categorySelect === "all" || scriptCategory === categorySelect;
+
+                if (matchesSearch && matchesCategory) {
+                    script.style.display = "block"; 
                 } else {
-                    scriptHolders[i].style.display = "none";
+                    script.style.display = "none"; 
                 }
-            }
+            });
         }
     </script>
 </body>
-
 </html>
