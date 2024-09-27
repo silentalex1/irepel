@@ -1,3 +1,3 @@
-this is a web proxy this is still being made in progress. 
+a website to hold roblox cheating scripts. 
 
-join the discord server for more updates, and sneakpeaks.
+enjoy and find your belove scripts.
