@@ -2,267 +2,168 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bat Prox</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #6c5ce7;
-      --secondary-color: #a29bfe;
-      --background-color: #0f0f1a;
-      --text-color: #ffffff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploiters Den</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --background-color: #0f0f1a;
+            --text-color: #ffffff;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
-      color: var(--text-color);
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
+        body {
+            background: linear-gradient(135deg, #3c1053, #000000 70%, #150050);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
-    }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
 
-    .bat-prox-heading {
-      font-size: clamp(2.5em, 5vw, 3em);
-      font-weight: 500;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .bat-text {
-      color: #f7f7f7;
-      margin-right: 10px;
-    }
+        .welcome-box h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
 
-    .prox-text {
-      color: #efefef;
-    }
+        .welcome-box p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
 
-    .cool-typing-box {
-      width: 90%;
-      max-width: 400px;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid var(--primary-color);
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 10px 30px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
 
-    .cool-typing-box:focus-within {
-      box-shadow: 0 0 0 3px var(--secondary-color);
-    }
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            gap: 30px;
+        }
 
-    .editable-text {
-      background: none;
-      border: none;
-      color: var(--text-color);
-      font-size: 1.2em;
-      width: 90%;
-      outline: none;
-      text-align: center;
-    }
+        .navbar li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
 
-    .editable-text::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
+        .navbar li a:hover {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+        }
 
-    #status {
-      margin-top: 20px;
-      font-size: 1em;
-      text-align: center;
-      color: var(--secondary-color);
-    }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
 
-    .loading {
-      display: none;
-      width: 40px;
-      height: 40px;
-      border: 3px solid var(--secondary-color);
-      border-top: 3px solid var(--primary-color);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Detached Navbar Styles */
-    .navbar {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 30px;
-      padding: 10px 20px;
-      z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar ul {
-      list-style-type: none;
-      display: flex;
-      gap: 20px;
-    }
-
-    .navbar li a {
-      color: var(--text-color);
-      text-decoration: none;
-      font-size: 0.9em;
-      font-weight: 400;
-      transition: all 0.3s ease;
-      padding: 8px 16px;
-      border-radius: 20px;
-    }
-
-    .navbar li a:hover {
-      background-color: var(--primary-color);
-      color: var(--background-color);
-    }
-
-    #particles-js {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      .navbar {
-        padding: 8px 16px;
-      }
-
-      .navbar ul {
-        gap: 10px;
-      }
-
-      .navbar li a {
-        padding: 6px 12px;
-        font-size: 0.8em;
-      }
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 8px 16px;
+            }
+            
+            .navbar ul {
+                gap: 15px;
+            }
+            
+            .navbar li a {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            
+            .welcome-box h2 {
+                font-size: 2em;
+            }
+            
+            .welcome-box p {
+                font-size: 1em;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
 <body>
-  <nav class="navbar">
-    <ul>
-      <li><a href="#movies">Movies</a></li>
-      <li><a href="#games">Games</a></li>
-      <li><a href="#settings">Settings</a></li>
-    </ul>
-  </nav>
+    <nav class="navbar">
+        <ul>
+            <li><a href="alex-scripts.html">Alex scripts</a></li>
+            <li><a href="main-scripts.html">Main Scripts</a></li>
+            <li><a href="https://discord.gg/xsPtEeb2rU">Discord Server</a></li>
+        </ul>
+    </nav>
 
-  <div class="content">
-    <h1 class="bat-prox-heading">
-      <span class="bat-text">Bat</span><span class="prox-text">Prox</span>
-    </h1>
-
-    <div class="cool-typing-box">
-      <input type="text" id="urlbar" class="editable-text" placeholder="Enter URL to unblock" onfocus="this.placeholder='';"
-        onblur="this.placeholder='Enter URL to unblock';">
+    <div class="content">
+        <div class="welcome-box">
+            <h2>Welcome to Exploiters Den</h2>
+            <p>Your all go-to Roblox scripts, find the scripts you love.</p>
+        </div>
     </div>
 
-    <div id="loading" class="loading"></div>
-    <div id="status"></div>
-  </div>
+    <div id="particles-js"></div>
 
-  <div id="particles-js"></div>
-
-  <script>
-    const input = document.getElementById("urlbar");
-    const statusDiv = document.getElementById("status");
-    const loadingDiv = document.getElementById("loading");
-
-    input.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        runService();
-      }
-    });
-
-    async function runService() {
-      const url = input.value;
-      if (!url) {
-        statusDiv.textContent = "Please enter a URL";
-        return;
-      }
-
-      statusDiv.textContent = "Processing...";
-      loadingDiv.style.display = "block";
-
-      try {
-        const response = await fetch(`/proxy?url=${encodeURIComponent(url)}`, {
-          method: 'GET',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+    <script>
+        particlesJS("particles-js", {
+          particles: {
+              number: { value: 80, density: { enable: true, value_area: 800 } },
+              color: { value: "#ffffff" },
+              shape: { type: "circle" },
+              opacity: { value: 0.5, random: true },
+              size: { value: 3, random:true },
+              move:{ enable:true, speed :1 , direction:"none", random:true , out_mode:"out"}
+          },
+          interactivity:{
+              events:{
+                  onhover:{ enable:true , mode:"repulse"},
+                  onclick:{ enable:true , mode:"push"}
+              }
           }
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const contentType = response.headers.get("content-type");
-        const data = await response.text();
-
-        const blob = new Blob([data], { type: contentType || 'text/html' });
-        const blobUrl = URL.createObjectURL(blob);
-
-        window.open(blobUrl, '_blank');
-
-        statusDiv.textContent = "Content loaded successfully!";
-      } catch (error) {
-        console.error('Error:', error);
-        statusDiv.textContent = `Error: ${error.message}`;
-      } finally {
-        loadingDiv.style.display = "none";
-      }
-    }
-
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
-      },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" }
-        }
-      }
-    });
-  </script>
+      });
+    </script>
 </body>
 
 </html>
