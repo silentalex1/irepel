@@ -102,11 +102,44 @@
             max-width: 600px;
         }
 
-        .no-scripts-message {
-            text-align: center;
+        .script-holder {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .script-holder:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .script-holder h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
             font-size: 1.2em;
-            color: var(--secondary-color);
-            margin-top: 30px;
+        }
+
+        .script-holder p {
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
         }
 
         #particles-js {
@@ -126,6 +159,7 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="alex-scripts.html">Alex Scripts</a></li>
+            <li><a href="https://discord.gg/your-invite-link" target="_blank">Discord Server</a></li>
         </ul>
     </nav>
 
@@ -135,7 +169,11 @@
         </div>
 
         <div class="scripts-container">
-            <p class="no-scripts-message">No scripts available at the moment. Check back later</p>
+            <div class="script-holder">
+                <h3>Infinite Yield</h3>
+                <p>Roblox admin script.</p>
+                <button class="copy-btn" onclick="copyScript('infinite-yield')">Copy Script</button>
+            </div>
         </div>
     </div>
 
@@ -159,9 +197,30 @@
             }
         });
 
+        function copyScript(scriptId) {
+            const scriptUrl = "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source";
+            navigator.clipboard.writeText(scriptUrl).then(function() {
+                alert("Script URL copied to clipboard!");
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
         function searchScripts() {
-            // This function will be implemented when scripts are added
-            console.log("Search functionality will be added when scripts are available");
+            var input, filter, scriptHolders, h3, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            scriptHolders = document.getElementsByClassName("script-holder");
+
+            for (i = 0; i < scriptHolders.length; i++) {
+                h3 = scriptHolders[i].getElementsByTagName("h3")[0];
+                txtValue = h3.textContent || h3.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    scriptHolders[i].style.display = "";
+                } else {
+                    scriptHolders[i].style.display = "none";
+                }
+            }
         }
     </script>
 </body>
