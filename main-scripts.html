@@ -11,8 +11,10 @@
             --secondary-color: #a29bfe;
             --background-color: #0f0f1a;
             --text-color: #ffffff;
+            --scrollbar-color: #000000;
         }
 
+        /* Basic Resets */
         * {
             margin: 0;
             padding: 0;
@@ -25,6 +27,19 @@
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-color);
+            border-radius: 10px;
+            border: 3px solid var(--background-color);
         }
 
         .content {
@@ -157,7 +172,7 @@
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .script-holder:hover {
@@ -246,8 +261,18 @@
             </div>
             <div class="script-holder" data-category="admin">
                 <h3>CMD-X</h3>
-                <p>A ROBLOX admin script with over 600 commands. Under reformation, V2.0.0 coming soon or something I guess.</p>
+                <p>A Roblox admin script with over 600 commands. Under reformation, V2.0.0 coming soon.</p>
                 <button class="copy-btn" onclick="copyScript('cmd-x')">Copy Script</button>
+            </div>
+            <div class="script-holder" data-category="mm2">
+                <h3>R3TH Priv</h3>
+                <p>Exclusive private mm2 script.</p>
+                <button class="copy-btn" onclick="copyScript('r3th-priv')">Copy Script</button>
+            </div>
+            <div class="script-holder" data-category="mm2">
+                <h3>Nexus</h3>
+                <p>A powerful mm2 script with tons of features.</p>
+                <button class="copy-btn" onclick="copyScript('nexus')">Copy Script</button>
             </div>
         </div>
     </div>
@@ -257,19 +282,15 @@
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
                 color: { value: "#ffffff" },
-                shape: { type: "circle" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
                 opacity: { value: 0.5, random: false },
                 size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 2 },
-                move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out" } // Slower speed and no cursor interaction
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 1.5, direction: "none", random: false, straight: false, out_mode: "out" }
             },
             interactivity: {
                 detect_on: "canvas",
-                events: {
-                    onhover: { enable: false }, // Disable cursor interaction
-                    onclick: { enable: true, mode: "push" },
-                    resize: true
-                },
+                events: { onhover: { enable: false }, onclick: { enable: true, mode: "push" }, resize: true },
                 modes: {
                     grab: { distance: 400, line_linked: { opacity: 1 } },
                     bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
@@ -283,10 +304,12 @@
 
         function copyScript(scriptId) {
             const scriptUrls = {
-                'eclipse-hub': "https://github.com/silentalex1/eclipsehubx/blob/main/eclipsehub.lua",
-                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source",
+                'eclipse-hub': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source.lua",
+                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source.lua",
                 'fates-admin': "https://github.com/fatesc/fates-admin",
-                'cmd-x': "https://github.com/CMD-X/CMD-X/blob/master/Source"
+                'cmd-x': "https://github.com/CMD-X/CMD-X/blob/master/Source",
+                'r3th-priv': "https://crackedscripts.net/post/11",
+                'nexus': "https://paste-drop.com/paste/whLJqMEInE"
             };
             const scriptUrl = scriptUrls[scriptId];
             navigator.clipboard.writeText(scriptUrl).then(() => {
