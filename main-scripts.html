@@ -229,6 +229,11 @@
         </div>
 
         <div class="scripts-container">
+            <div class="script-holder" data-category="mm2">
+                <h3>Eclipse Hub</h3>
+                <p>Powerful mm2 script with a lot of features.</p>
+                <button class="copy-btn" onclick="copyScript('eclipse-hub')">Copy Script</button>
+            </div>
             <div class="script-holder" data-category="admin">
                 <h3>Infinite Yield</h3>
                 <p>Powerful admin script for Roblox.</p>
@@ -257,35 +262,33 @@
 
         function copyScript(scriptId) {
             const scriptUrls = {
-                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
+                'eclipse-hub': "https://github.com/silentalex1/eclipsehubx/blob/main/eclipsehub.lua",
+                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source.lua"
             };
-            
             const scriptUrl = scriptUrls[scriptId];
-            navigator.clipboard.writeText(scriptUrl).then(function() {
-                alert("Script URL copied to clipboard!");
-            }, function(err) {
-                console.error('Could not copy text: ', err);
+            navigator.clipboard.writeText(scriptUrl).then(() => {
+                alert('Script URL copied to clipboard!');
+            }, () => {
+                alert('Failed to copy script URL.');
             });
         }
 
         function filterScripts() {
-            const searchInput = document.getElementById("searchInput").value.toUpperCase();
-            const categorySelect = document.getElementById("categorySelect").value;
-            const scripts = document.querySelectorAll(".script-holder");
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categorySelect').value;
+            const scripts = document.getElementsByClassName('script-holder');
 
-            scripts.forEach(script => {
-                const scriptName = script.querySelector("h3").textContent.toUpperCase();
-                const scriptCategory = script.getAttribute("data-category");
+            for (let i = 0; i < scripts.length; i++) {
+                const script = scripts[i];
+                const title = script.getElementsByTagName('h3')[0].innerText.toLowerCase();
+                const categoryMatch = category === 'all' || script.dataset.category === category;
 
-                const matchesSearch = scriptName.includes(searchInput);
-                const matchesCategory = categorySelect === "all" || scriptCategory === categorySelect;
-
-                if (matchesSearch && matchesCategory) {
-                    script.style.display = "block"; 
+                if (title.includes(input) && categoryMatch) {
+                    script.style.display = '';
                 } else {
-                    script.style.display = "none"; 
+                    script.style.display = 'none';
                 }
-            });
+            }
         }
     </script>
 </body>
