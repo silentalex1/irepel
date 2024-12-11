@@ -239,6 +239,7 @@
                     <option value="admin">Admin Scripts</option>
                     <option value="mm2">MM2</option>
                     <option value="dahood">Dahood</option>
+                    <option value="useful">Useful Scripts</option>
                 </select>
             </div>
         </div>
@@ -274,6 +275,11 @@
                 <p>A powerful mm2 script with tons of features.</p>
                 <button class="copy-btn" onclick="copyScript('nexus')">Copy Script</button>
             </div>
+            <div class="script-holder" data-category="useful">
+                <h3>UNC Script</h3>
+                <p>aka UNC, is an organization between executor developers to provide a unified scripting API for our scripters.</p>
+                <button class="copy-btn" onclick="copyScript('unc-script')">Copy Script</button>
+            </div>
         </div>
     </div>
 
@@ -290,52 +296,18 @@
             },
             interactivity: {
                 detect_on: "canvas",
-                events: { onhover: { enable: false }, onclick: { enable: true, mode: "push" }, resize: true },
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
                 modes: {
-                    grab: { distance: 400, line_linked: { opacity: 1 } },
-                    bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
-                    repulse: { distance: 200, duration: 0.4 },
-                    push: { particles_nb: 4 },
-                    remove: { particles_nb: 2 }
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
                 }
             },
             retina_detect: true
         });
-
-        function copyScript(scriptId) {
-            const scriptUrls = {
-                'eclipse-hub': "https://github.com/silentalex1/eclipsehubx/blob/main/eclipsehub.lua",
-                'infinite-yield': "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source",
-                'fates-admin': "https://github.com/fatesc/fates-admin",
-                'cmd-x': "https://github.com/CMD-X/CMD-X/blob/master/Source",
-                'r3th-priv': "https://crackedscripts.net/post/11",
-                'nexus': "https://paste-drop.com/paste/whLJqMEInE"
-            };
-            const scriptUrl = scriptUrls[scriptId];
-            navigator.clipboard.writeText(scriptUrl).then(() => {
-                alert('Script URL copied to clipboard!');
-            }, () => {
-                alert('Failed to copy script URL.');
-            });
-        }
-
-        function filterScripts() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categorySelect').value;
-            const scripts = document.getElementsByClassName('script-holder');
-
-            for (let i = 0; i < scripts.length; i++) {
-                const script = scripts[i];
-                const title = script.getElementsByTagName('h3')[0].innerText.toLowerCase();
-                const categoryMatch = category === 'all' || script.dataset.category === category;
-
-                if (title.includes(input) && categoryMatch) {
-                    script.style.display = '';
-                } else {
-                    script.style.display = 'none';
-                }
-            }
-        }
     </script>
 </body>
 </html>
